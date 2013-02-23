@@ -1,0 +1,19 @@
+{
+  "name": "my-application",
+  "version": "0.0.1",
+  "author": "Chad McElligott <hotsw4p@gmail.com>",
+  "description": "",
+  "scripts": {
+    "start": "node app.js",
+    "test": "node_modules/.bin/mocha",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/hotsw4p/my-application.git"
+    }  
+  },
+  "private": true,
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  }
+}
