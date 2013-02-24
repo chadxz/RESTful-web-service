@@ -1,5 +1,5 @@
 {
-  "name": "my-application",
+  "name": "dirty-blog",
   "version": "0.0.1",
   "author": "Chad McElligott <hotsw4p@gmail.com>",
   "description": "",
@@ -8,7 +8,7 @@
     "test": "node_modules/.bin/mocha",
     "repository": {
       "type": "git",
-      "url": "https://github.com/hotsw4p/my-application.git"
+      "url": "https://github.com/hotsw4p/dirty-blog.git"
     }  
   },
   "private": true,
