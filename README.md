@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hotsw4p/dirty-blog.png)](https://travis-ci.org/hotsw4p/dirty-blog)
+
 this is a test of the emergency broadcast system.
 
 THIS IS ONLY A TEST
