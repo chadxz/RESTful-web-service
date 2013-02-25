@@ -1,19 +1,19 @@
-var should = require('should');
-var assert = require('assert');
+var should = require("should");
+var assert = require("assert");
 
-describe('the dirty blog', function () {
+describe("the dirty blog", function () {
 
-  describe('articles', function () {
+  describe("articles", function () {
 
-    var articleProvider = require('../lib/articleprovider');
+    var articleProvider = require("../lib/articleprovider");
     var testArticleID;
 
     beforeEach(function (done) {
 
       var testArticle = {
-        title: 'test article',
-        body: 'test body',
-        author: 'test@email.com'
+        title: "test article",
+        body: "test body",
+        author: "test@email.com"
       };
 
       articleProvider.clear(function (err) {
@@ -24,33 +24,33 @@ describe('the dirty blog', function () {
       });
     });
 
-    it('should be able to be add an article', function (done) {
+    it("should be able to be add an article", function (done) {
 
-      var articleTitle = 'Yogi bears Picnic';
+      var articleTitle = "Yogi Bear's Picnic";
 
       var anArticle = {
         title: articleTitle,
-        body: 'The picnic was excellent',
-        author: 'yogi@bears.com'
+        body: "The picnic was excellent",
+        author: "yogi@bears.com"
       };
 
       articleProvider.save(anArticle, function (err, savedArticle) {
 
         should.not.exist(err);
         savedArticle.title.should.equal(articleTitle);
-        savedArticle.should.haveOwnProperty('id');
-        savedArticle.should.haveOwnProperty('createdAt');
+        savedArticle.should.haveOwnProperty("id");
+        savedArticle.should.haveOwnProperty("createdAt");
         done();
       });
     });
 
-    it('should be able to be edit an article', function (done) {
+    it("should be able to be edit an article", function (done) {
 
       articleProvider.findByID(testArticleID, function (err, foundArticle) {
 
         should.not.exist(err);
         should.exist(foundArticle);
-        foundArticle.body = 'edited body';
+        foundArticle.body = "edited body";
 
         articleProvider.save(foundArticle, function (err, newSavedArticle) {
 
@@ -68,6 +68,6 @@ describe('the dirty blog', function () {
       });
     });
 
-    it('should be able to be delete an article');
+    it("should be able to be delete an article");
   });
 });
