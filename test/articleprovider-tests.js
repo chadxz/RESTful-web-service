@@ -15,12 +15,15 @@ describe("article provider", function () {
     };
 
     articleProvider.clear(function (err) {
-          debugger;
       articleProvider.save(testArticle, function (err, savedArticles) {
         testArticleID = savedArticles[0].id;
         done();
       });
     });
+  });
+
+  after(function (done) {
+    articleProvider.clear(done);
   });
 
   describe("#findAll()", function () {
@@ -121,9 +124,6 @@ describe("article provider", function () {
     it("should EDIT an article when article.id matches an article existing in storage", function (done) {
 
       articleProvider.findByID(testArticleID, function (err, foundArticle) {
-
-        should.not.exist(err);
-        should.exist(foundArticle);
         foundArticle.body = "edited body";
 
         articleProvider.save(foundArticle, function (err, savedArticles) {
