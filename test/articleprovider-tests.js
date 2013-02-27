@@ -43,6 +43,7 @@ describe("article provider", function () {
         });
       });
     });
+
   });
 
   describe("#clear()", function () {
@@ -57,6 +58,7 @@ describe("article provider", function () {
         });
       });
     });
+
   });
 
   describe("#findByID()", function () {
@@ -76,6 +78,7 @@ describe("article provider", function () {
         done();
       });
     });
+
   });
 
   describe("#save()", function () {
@@ -142,6 +145,28 @@ describe("article provider", function () {
 
   });
 
+  describe("#remove()", function () {
 
-  it("should be able to be delete an article");
+    it("should delete an article when a valid article.id is specified", function (done) {
+      articleProvider.remove(testArticleID, function (err) {
+        should.not.exist(err);
+        articleProvider.findAll(function (err, allArticles) {
+          allArticles.length.should.equal(0);
+          done();
+        });
+      });
+    });
+
+    it("should return an error when an invalid article.id is specified", function (done) {
+      articleProvider.remove(-1, function (err) {
+        should.exist(err);
+        articleProvider.findAll(function (err, allArticles) {
+          allArticles.length.should.equal(1);
+          done();
+        });
+      });
+    });
+
+  });
+
 });

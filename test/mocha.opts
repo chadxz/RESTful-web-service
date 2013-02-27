@@ -1,2 +1,2 @@
---reporter spec
+--reporter min 
 --ui bdd
