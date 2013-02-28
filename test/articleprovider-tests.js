@@ -1,5 +1,5 @@
-var should = require("should");
-var assert = require("assert");
+var should = require("should")
+  , assert = require("assert");
 
 describe("article provider", function () {
 
