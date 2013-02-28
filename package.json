@@ -5,8 +5,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "test": "node_modules/.bin/mocha",
-    "start": "node index.js"
+    "test": "node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
