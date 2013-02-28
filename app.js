@@ -11,6 +11,7 @@ app.get("/", function(req, res) {
 
 // start server if running as an app
 if (!module.parent) {
-  app.listen(app.get("port"));
-  console.log("web server listening on port " + app.get("port"));
+  app.listen(app.get("port"), function () {
+	console.log("web server listening on port " + app.get("port"));
+  });  
 }
