@@ -1,3 +1,3 @@
-module.exports = process.env.EXPRESS_COV
+module.exports = process.env.DIRTYBLOG_COV
   ? require('./lib-cov/app')
   : require('./lib/app');
