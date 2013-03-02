@@ -6,7 +6,7 @@ var libpath = process.env.DIRTYBLOG_COV ? "../lib-cov/" : "../lib/";
 describe("article provider", function () {
 
   var articleProvider = require(libpath + "articleprovider");
-  var testArticleID;
+  var testArticleId;
 
   beforeEach(function (done) {
 
@@ -18,7 +18,7 @@ describe("article provider", function () {
 
     articleProvider.clear(function (err) {
       articleProvider.save(testArticle, function (err, savedArticles) {
-        testArticleID = savedArticles[0].id;
+        testArticleId = savedArticles[0].id;
         done();
       });
     });
@@ -63,18 +63,26 @@ describe("article provider", function () {
 
   });
 
-  describe("#findByID()", function () {
+  describe("#findById()", function () {
 
     it("should return an article when a valid id is supplied", function (done) {
-      articleProvider.findByID(testArticleID, function (err, foundArticle) {
+      articleProvider.findById(testArticleId, function (err, foundArticle) {
         should.not.exist(err);
-        foundArticle.id.should.equal(testArticleID);
+        foundArticle.id.should.equal(testArticleId);
+        done();
+      });
+    });
+
+    it("should return an article when a string numeric id is supplied", function (done) {
+      articleProvider.findById(testArticleId.toString(), function (err, foundArticle) {
+        should.not.exist(err);
+        foundArticle.id.should.equal(testArticleId);
         done();
       });
     });
 
     it("should return an error when an invalid id is supplied", function (done) {
-      articleProvider.findByID(-1, function (err, foundArticle) {
+      articleProvider.findById(-1, function (err, foundArticle) {
         should.exist(err);
         should.not.exist(foundArticle);
         done();
@@ -128,7 +136,7 @@ describe("article provider", function () {
 
     it("should EDIT an article when article.id matches an article existing in storage", function (done) {
 
-      articleProvider.findByID(testArticleID, function (err, foundArticle) {
+      articleProvider.findById(testArticleId, function (err, foundArticle) {
         foundArticle.body = "edited body";
 
         articleProvider.save(foundArticle, function (err, savedArticles) {
@@ -150,7 +158,7 @@ describe("article provider", function () {
   describe("#remove()", function () {
 
     it("should delete an article when a valid article.id is specified", function (done) {
-      articleProvider.remove(testArticleID, function (err) {
+      articleProvider.remove(testArticleId, function (err) {
         should.not.exist(err);
         articleProvider.findAll(function (err, allArticles) {
           allArticles.length.should.equal(0);
