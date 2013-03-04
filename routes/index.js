@@ -1,5 +1,2 @@
-exports.index = function (req, res) {
-  res.send("ohayou gozaimasu");
-};
-
+exports.home = require("./home");
 exports.articles = require("./articles");
