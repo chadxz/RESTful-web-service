@@ -16,8 +16,8 @@ describe("article provider", function () {
       author: "test@email.com"
     };
 
-    articleProvider.clear(function (err) {
-      articleProvider.save(testArticle, function (err, savedArticles) {
+    articleProvider.clear(function (clearError) {
+      articleProvider.save(testArticle, function (saveError, savedArticles) {
         testArticleId = savedArticles[0].id;
         done();
       });
@@ -37,9 +37,9 @@ describe("article provider", function () {
         {title: "t3", body: "b3", author: "me@here.com"}
       ];
 
-      articleProvider.save(someArticles, function (err, savedArticles) {
-        articleProvider.findAll(function (err, allArticles) {
-          should.not.exist(err);
+      articleProvider.save(someArticles, function (saveError, savedArticles) {
+        articleProvider.findAll(function (findAllError, allArticles) {
+          should.not.exist(findAllError);
           allArticles.length.should.equal(4);
           done();
         });
@@ -51,10 +51,10 @@ describe("article provider", function () {
   describe("#clear()", function () {
 
     it("should remove all articles from storage", function (done) {
-      articleProvider.clear(function (err) {
-        should.not.exist(err);
+      articleProvider.clear(function (clearError) {
+        should.not.exist(clearError);
 
-        articleProvider.findAll(function (err, allArticles) {
+        articleProvider.findAll(function (findAllError, allArticles) {
           allArticles.length.should.equal(0);
           done();
         });
@@ -66,24 +66,24 @@ describe("article provider", function () {
   describe("#findById()", function () {
 
     it("should return an article when a valid id is supplied", function (done) {
-      articleProvider.findById(testArticleId, function (err, foundArticle) {
-        should.not.exist(err);
+      articleProvider.findById(testArticleId, function (findError, foundArticle) {
+        should.not.exist(findError);
         foundArticle.id.should.equal(testArticleId);
         done();
       });
     });
 
     it("should return an article when a string numeric id is supplied", function (done) {
-      articleProvider.findById(testArticleId.toString(), function (err, foundArticle) {
-        should.not.exist(err);
+      articleProvider.findById(testArticleId.toString(), function (findError, foundArticle) {
+        should.not.exist(findError);
         foundArticle.id.should.equal(testArticleId);
         done();
       });
     });
 
     it("should return an error when an invalid id is supplied", function (done) {
-      articleProvider.findById(-1, function (err, foundArticle) {
-        should.exist(err);
+      articleProvider.findById(-1, function (findError, foundArticle) {
+        should.exist(findError);
         should.not.exist(foundArticle);
         done();
       });
@@ -102,13 +102,13 @@ describe("article provider", function () {
         author: "yogi@bears.com"
       };
 
-      articleProvider.save(anArticle, function (err, savedArticles) {
-        should.not.exist(err);
+      articleProvider.save(anArticle, function (saveError, savedArticles) {
+        should.not.exist(saveError);
         savedArticles[0].title.should.equal(articleTitle);
         savedArticles[0].should.haveOwnProperty("id");
         savedArticles[0].should.haveOwnProperty("createdAt");
 
-        articleProvider.findAll(function (err, allArticles) {
+        articleProvider.findAll(function (findAllError, allArticles) {
           allArticles.length.should.equal(2);
           done();
         });
@@ -123,11 +123,11 @@ describe("article provider", function () {
         author: "cptobvious@gmail.com"
       };
 
-      articleProvider.save(anArticle, function (err, savedArticles) {
-        should.not.exist(err);
+      articleProvider.save(anArticle, function (saveError, savedArticles) {
+        should.not.exist(saveError);
         should.exist(savedArticles);
 
-        articleProvider.findAll(function (err, allArticles) {
+        articleProvider.findAll(function (findAllError, allArticles) {
           allArticles.length.should.equal(2);
           done();
         });
@@ -136,16 +136,16 @@ describe("article provider", function () {
 
     it("should EDIT an article when article.id matches an article existing in storage", function (done) {
 
-      articleProvider.findById(testArticleId, function (err, foundArticle) {
+      articleProvider.findById(testArticleId, function (findError, foundArticle) {
         foundArticle.body = "edited body";
 
-        articleProvider.save(foundArticle, function (err, savedArticles) {
-          should.not.exist(err);
+        articleProvider.save(foundArticle, function (saveError, savedArticles) {
+          should.not.exist(saveError);
           savedArticles[0].body.should.equal(foundArticle.body);
           savedArticles[0].id.should.equal(foundArticle.id);
           savedArticles[0].should.haveOwnProperty("lastUpdatedAt");
 
-          articleProvider.findAll(function (err, allArticles) {
+          articleProvider.findAll(function (findAllError, allArticles) {
             allArticles.should.have.length(1);
             done();
           });
@@ -158,9 +158,9 @@ describe("article provider", function () {
   describe("#remove()", function () {
 
     it("should delete an article when a valid article.id is specified", function (done) {
-      articleProvider.remove(testArticleId, function (err) {
-        should.not.exist(err);
-        articleProvider.findAll(function (err, allArticles) {
+      articleProvider.remove(testArticleId, function (removeError) {
+        should.not.exist(removeError);
+        articleProvider.findAll(function (findAllError, allArticles) {
           allArticles.length.should.equal(0);
           done();
         });
@@ -168,9 +168,9 @@ describe("article provider", function () {
     });
 
     it("should return an error when an invalid article.id is specified", function (done) {
-      articleProvider.remove(-1, function (err) {
-        should.exist(err);
-        articleProvider.findAll(function (err, allArticles) {
+      articleProvider.remove(-1, function (removeError) {
+        should.exist(removeError);
+        articleProvider.findAll(function (findAllError, allArticles) {
           allArticles.length.should.equal(1);
           done();
         });

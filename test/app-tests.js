@@ -58,8 +58,8 @@ describe("the dirty blog", function () {
         .end(function (err, res) {
           should.not.exist(err);
 
-          articleProvider.findAll(function (err, articles) {
-            var articlesJSON = JSON.stringify(articles, app.get("json replacer"), app.get("json spaces"));
+          articleProvider.findAll(function (findError, allArticles) {
+            var articlesJSON = JSON.stringify(allArticles, app.get("json replacer"), app.get("json spaces"));
             articlesJSON.should.equal(res.text);
             done();
           });
@@ -77,7 +77,7 @@ describe("the dirty blog", function () {
         .end(function (err, res) {
           should.not.exist(err);
 
-          articleProvider.findById(testArticleId, function (err, article) {
+          articleProvider.findById(testArticleId, function (findError, article) {
             var articleJSON = JSON.stringify(article, app.get("json replacer"), app.get("json spaces"));
             articleJSON.should.equal(res.text);
             done();
