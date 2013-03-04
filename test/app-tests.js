@@ -85,6 +85,22 @@ describe("the dirty blog", function () {
         });
       });
 
+      it("should return 404 when an invalid article id is specified", function (done) {
+        req(app)
+        .get("/articles/foo")
+        .expect(404)
+        .end(function (err, resp) {
+          req(app)
+          .get("/articles/foo/bar")
+          .expect(404)
+          .end(function (err2, resp2) {
+            req(app)
+            .get("/articles/" + testArticleId + "/foo")
+            .expect(404, done);
+          });
+        });
+      });
+
     });
 
   });
