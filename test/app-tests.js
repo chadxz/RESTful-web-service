@@ -5,16 +5,19 @@ var should = require("should")
 var libdir = process.env.DIRTYBLOG_COV ? "../lib-cov/" : "../lib/";
 var app = require (libdir + "app");
 
-describe("the dirty blog", function () {
+describe("routes", function () {
 
-  describe("/", function () {
+  describe("home routes", function () {
 
-    it("should respond ok", function (done) {
-      req(app)
-      .get("/")
-      .expect(200, done);
+    describe("/", function () {
+
+      it("should respond ok", function (done) {
+        req(app)
+        .get("/")
+        .expect(200, done);
+      });
+
     });
-
   });
 
   describe("article routes", function () {
