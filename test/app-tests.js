@@ -2,8 +2,7 @@ var should = require("should")
   , assert = require("assert")
   , req = require("supertest");
 
-var libdir = process.env.DIRTYBLOG_COV ? "../lib-cov/" : "../lib/";
-var app = require (libdir + "app");
+var app = require ("../lib/app");
 
 describe("routes", function () {
 
@@ -22,7 +21,7 @@ describe("routes", function () {
 
   describe("article routes", function () {
 
-    var articleProvider = require(libdir + "articleprovider")
+    var articleProvider = require("../lib/articleprovider")
       , testArticleId = "";
 
     beforeEach(function (done) {
@@ -60,7 +59,6 @@ describe("routes", function () {
         .expect("Content-Type", /json/)
         .end(function (err, res) {
           should.not.exist(err);
-
           articleProvider.findAll(function (findError, allArticles) {
             var articlesJSON = JSON.stringify(allArticles, app.get("json replacer"), app.get("json spaces"));
             articlesJSON.should.equal(res.text);

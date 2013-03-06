@@ -1,11 +1,9 @@
 var should = require("should")
   , assert = require("assert");
 
-var libpath = process.env.DIRTYBLOG_COV ? "../lib-cov/" : "../lib/";
-
 describe("article provider", function () {
 
-  var articleProvider = require(libpath + "articleprovider");
+  var articleProvider = require("../lib/articleprovider");
   var testArticleId;
 
   beforeEach(function (done) {
