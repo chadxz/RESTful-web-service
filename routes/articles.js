@@ -16,3 +16,12 @@ exports.findById = function (req, res) {
     res.send(article);
   });
 };
+
+exports.save = function(req, res) {
+  var articleToSave = req.body;
+  articleProvider.save(articleToSave, function (err, savedArticles) {
+    var articleLocation = req.protocol + "://" + req.get("host") + "/articles/" + savedArticles[0].id;
+    res.location(articleLocation);
+    res.send(201);
+  });
+};

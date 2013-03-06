@@ -49,6 +49,35 @@ describe("routes", function () {
     });
 
     describe("/articles", function() {
+      describe("POST", function () {
+
+        var postArticle = {
+          title: "new article!",
+          body: "this is a test",
+          author: "test@email.com"
+        };
+
+        it("should allow a single article to be saved", function (done) {
+          req(app)
+          .post("/articles")
+          .set("Content-Type", "application/json")
+          .send(postArticle)
+          .expect(201, done);
+        });
+
+        it("should return a valid location header", function (done) {
+          req(app)
+          .post("/articles")
+          .set("Content-Type", "application/json")
+          .send(postArticle)
+          .end(function (err, res) {
+            var location = res.header["location"];
+            should.exist(location);
+            done();
+          });
+        });
+      });
+
       describe("GET", function () {
 
         it("should respond ok", function (done) {
