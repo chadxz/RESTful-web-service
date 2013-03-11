@@ -71,8 +71,7 @@ describe("routes", function () {
           .set("Content-Type", "application/json")
           .send(postArticle)
           .end(function (err, res) {
-            var location = res.header["location"];
-            should.exist(location);
+            should.exist(res.headers["location"]);
             done();
           });
         });
@@ -102,6 +101,35 @@ describe("routes", function () {
 
       });
 
+      describe("OPTIONS", function () {
+        it("should respond ok with an allow header", function (done) {
+          req(app)
+          .options("/articles")
+          .expect(200)
+          .end(function (err, res) {
+            should.not.exist(err);
+            should.exist(res.headers["allow"]);
+            done();
+          });
+        });
+      });
+
+      describe("HEAD", function () {
+        it("should respond ok with a content length but no body", function (done) {
+          req(app)
+          .head("/articles")
+          .expect(200)
+          .end(function (err, res) {
+            var contentLength = res.headers["content-length"];
+
+            should.not.exist(err);
+            should.exist(contentLength);
+            contentLength.should.be.above(0);
+
+            done();
+          });
+        });
+      });
     });
 
     describe("/articles/:id", function() {

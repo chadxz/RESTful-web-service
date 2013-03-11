@@ -1,5 +1,6 @@
 var should = require("should")
-  , assert = require("assert");
+  , assert = require("assert")
+  , _ = require("underscore");
 
 describe("article provider", function () {
 
@@ -175,6 +176,51 @@ describe("article provider", function () {
       });
     });
 
+  });
+
+  describe("#add()", function() {
+    var articleTitle = "Yogi Bear's Picnic";
+
+    var anArticle = {
+      title: articleTitle,
+      body: "The picnic was excellent",
+      author: "yogi@bears.com"
+    };
+
+    it("should add an article when article.id is not specified", function (done) {
+      articleProvider.add(anArticle, function (addError, savedArticle) {
+        should.not.exist(addError);
+        should.exist(savedArticle);
+        savedArticle.should.haveOwnProperty("id");
+        savedArticle.should.haveOwnProperty("createdAt");
+        savedArticle.title.should.equal(articleTitle);
+
+        articleProvider.findAll(function (findAllError, allArticles) {
+          allArticles.length.should.equal(2);
+          done();
+        });
+      });
+    });
+
+    it("should throw an error when article.id is specified", function (done) {
+      var addArticle = _.extend({}, anArticle);
+      addArticle.id = 37;
+      articleProvider.add(addArticle, function (addError, savedArticle) {
+        should.exist(addError);
+        should.not.exist(savedArticle);
+        done();
+      });
+    });
+
+    it("should allow createdAt to be specified ahead of time", function (done) {
+      anArticle.createdAt = new Date();
+      articleProvider.add(anArticle, function (addError, savedArticle) {
+        should.not.exist(addError);
+        should.exist(savedArticle);
+        savedArticle.createdAt.should.equal(anArticle.createdAt);
+        done();
+      });
+    });
   });
 
 });

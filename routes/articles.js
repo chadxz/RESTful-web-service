@@ -17,10 +17,23 @@ exports.findById = function (req, res) {
   });
 };
 
-exports.save = function(req, res) {
+exports.options = function(req, res) {
+  res.set("Allow", "GET,PUT,OPTIONS,HEAD");
+  res.send(200);
+};
+
+exports.head = function(req, res) {
+  articleProvider.findAll(function (err, articles) {
+    var content = JSON.stringify(articles, req.app.get("json replacer"), req.app.get("json spaces"));
+    res.set("Content-Length", content.length);
+    res.send(200);
+  });
+};
+
+exports.add = function(req, res) {
   var articleToSave = req.body;
-  articleProvider.save(articleToSave, function (err, savedArticles) {
-    var articleLocation = req.protocol + "://" + req.get("host") + "/articles/" + savedArticles[0].id;
+  articleProvider.add(articleToSave, function (err, savedArticle) {
+    var articleLocation = req.protocol + "://" + req.get("host") + "/articles/" + savedArticle.id;
     res.location(articleLocation);
     res.send(201);
   });
