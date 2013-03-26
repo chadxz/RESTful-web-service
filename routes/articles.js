@@ -18,7 +18,7 @@ exports.findById = function (req, res) {
 };
 
 exports.options = function(req, res) {
-  res.set("Allow", "GET,PUT,OPTIONS,HEAD");
+  res.set("Allow", "GET,POST,OPTIONS,HEAD");
   res.send(200);
 };
 

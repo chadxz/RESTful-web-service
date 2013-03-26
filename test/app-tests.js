@@ -123,6 +123,7 @@ describe("routes", function () {
             var contentLength = res.headers["content-length"];
 
             should.not.exist(err);
+            res.text.should.eql('');
             should.exist(contentLength);
             contentLength.should.be.above(0);
 

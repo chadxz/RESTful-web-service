@@ -213,11 +213,12 @@ describe("article provider", function () {
     });
 
     it("should allow createdAt to be specified ahead of time", function (done) {
-      anArticle.createdAt = new Date();
-      articleProvider.add(anArticle, function (addError, savedArticle) {
+      var addArticle = _.extend({}, anArticle);
+      addArticle.createdAt = new Date();
+      articleProvider.add(addArticle, function (addError, savedArticle) {
         should.not.exist(addError);
         should.exist(savedArticle);
-        savedArticle.createdAt.should.equal(anArticle.createdAt);
+        savedArticle.createdAt.should.equal(addArticle.createdAt);
         done();
       });
     });
