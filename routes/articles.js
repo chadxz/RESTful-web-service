@@ -31,6 +31,12 @@ exports.head = function(req, res) {
 };
 
 exports.add = function(req, res) {
+  if(!req.is("json")) {
+    res.status(400);
+    res.json({"message": "Content-Type must be application/json: [" + req.get("Content-Type") + "]"});
+    return;
+  }
+
   var articleToSave = req.body;
   articleProvider.add(articleToSave, function (err, savedArticle) {
     var articleLocation = req.protocol + "://" + req.get("host") + "/articles/" + savedArticle.id;

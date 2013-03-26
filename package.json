@@ -13,12 +13,12 @@
     "url": "https://github.com/hotsw4p/dirty-blog.git"
   },
   "dependencies": {
-    "underscore": "*",
-    "express": "*"
+    "underscore": "1.x",
+    "express": "3.x"
   },
   "devDependencies": {
-    "mocha": "*",
-    "should": "*",
+    "mocha": "1.x",
+    "should": "1.x",
     "supertest": "*"
   }
 }

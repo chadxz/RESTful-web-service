@@ -75,6 +75,15 @@ describe("routes", function () {
             done();
           });
         });
+
+        it("should return an error when content-type not JSON", function (done) {
+          req(app)
+          .post("/articles")
+          .set("Content-Type", "text/plain")
+          .send("test 123")
+          .expect(400, done);
+        });
+
       });
 
       describe("GET", function () {
