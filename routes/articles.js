@@ -39,7 +39,7 @@ exports.add = function(req, res) {
 
   var articleToSave = req.body;
   articleProvider.add(articleToSave, function (err, savedArticle) {
-    var articleLocation = req.protocol + "://" + req.get("host") + "/articles/" + savedArticle.id;
+    var articleLocation = req.protocol + "://" + req.get("host") + req.route.path + "/" + savedArticle.id;
     res.location(articleLocation);
     res.send(201);
   });
